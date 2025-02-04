@@ -1,0 +1,13 @@
+h2 {
+   text-align: center;
+}
+
+mat-dialog-content {
+   padding: 10px;
+   text-align: center;
+}
+
+mat-dialog-actions {
+   display: flex;
+   justify-content: center;
+}
