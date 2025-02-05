@@ -3,7 +3,7 @@ using AuthLocationApp.Infrastructure.DbModels;
 
 namespace AuthLocationApp.Infrastructure.Mappers
 {
-   internal class ProvinceMapper : IMapper<ProvinceDbModel, Province>
+   public class ProvinceMapper : IMapper<ProvinceDbModel, Province>
    {
       public Province ToDomain(ProvinceDbModel dbModel)
       {

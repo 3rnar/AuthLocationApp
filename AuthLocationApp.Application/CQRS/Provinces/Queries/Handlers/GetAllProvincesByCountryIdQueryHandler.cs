@@ -5,7 +5,7 @@ using AuthLocationApp.Application.Interfaces.Repositories;
 
 namespace AuthLocationApp.Application.CQRS.Provinces.Queries.Handlers
 {
-   internal class GetAllProvincesByCountryIdQueryHandler : IRequestHandler<GetAllProvincesByCountryIdQuery, IImmutableList<ProvinceDto>>
+   public class GetAllProvincesByCountryIdQueryHandler : IRequestHandler<GetAllProvincesByCountryIdQuery, IImmutableList<ProvinceDto>>
    {
       private readonly IProvinceRepository _provinceRepository;
 

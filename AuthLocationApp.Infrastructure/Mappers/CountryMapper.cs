@@ -3,7 +3,7 @@ using AuthLocationApp.Infrastructure.DbModels;
 
 namespace AuthLocationApp.Infrastructure.Mappers
 {
-   internal class CountryMapper : IMapper<CountryDbModel, Country>
+   public class CountryMapper : IMapper<CountryDbModel, Country>
    {
       public Country ToDomain(CountryDbModel dbModel)
       {

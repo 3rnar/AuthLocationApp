@@ -8,14 +8,11 @@ using Serilog;
 
 namespace AuthLocationApp.Infrastructure.Repositories
 {
-   internal class CountryRepository : BaseRepository<Country, CountryDbModel>, ICountryRepository
+   public class CountryRepository : BaseRepository<Country, CountryDbModel>, ICountryRepository
    {
-      private readonly ILogger _logger;
-
       public CountryRepository(ApplicationDbContext context, IMapper<CountryDbModel, Country> mapper)
           : base(context, mapper)
       {
-         _logger = Log.ForContext<CountryRepository>();
       }
 
       public async Task<Country?> GetByNameAsync(string name, CancellationToken cancellationToken = default)

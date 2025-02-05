@@ -10,15 +10,39 @@ namespace AuthLocationApp.Infrastructure.Repositories
 {
    public class UserRepository : BaseRepository<User, UserDbModel>, IUserRepository
    {
-      private readonly ILogger _logger;
-
       public UserRepository(ApplicationDbContext context, IMapper<UserDbModel, User> mapper)
           : base(context, mapper)
       {
-         _logger = Log.ForContext<UserRepository>();
       }
 
-      public async Task<User?> GetUserByEmailAsync(string email, CancellationToken cancellationToken = default)
+        public async Task<bool> EmailExistsAsync(string email, CancellationToken cancellationToken = default)
+        {
+            _logger.Information("Checking if user exists with email: {Email}", email);
+
+            try
+            {
+                var exists = await _dbSet
+                    .AnyAsync(u => u.Email == email, cancellationToken);
+
+                if (exists)
+                {
+                    _logger.Information("User with email {Email} exists.", email);
+                }
+                else
+                {
+                    _logger.Warning("No user found with email {Email}.", email);
+                }
+
+                return exists;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error checking if user exists by email: {Email}", email);
+                throw;
+            }
+        }
+
+        public async Task<User?> GetUserByEmailAsync(string email, CancellationToken cancellationToken = default)
       {
          _logger.Information("Fetching user by email: {Email}", email);
 

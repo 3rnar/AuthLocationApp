@@ -26,7 +26,6 @@ namespace AuthLocationApp.Infrastructure.DependencyInjection
 
         private static IServiceCollection AddSingleton(this IServiceCollection services)
         {
-            services.AddSingleton<DatabaseCleanupService>();
             services.AddSingleton<IPasswordHasher, BCryptPasswordHasher>();
 
             return services;

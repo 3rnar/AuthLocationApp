@@ -7,7 +7,7 @@ using AuthLocationApp.Domain.Exceptions;
 
 namespace AuthLocationApp.Application.CQRS.Users.Commands.Handlers
 {
-   internal class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, int>
+   public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, int>
    {
       private readonly IUserRepository _userRepository;
       private readonly IPasswordHasher _passwordHasher;
@@ -20,8 +20,8 @@ namespace AuthLocationApp.Application.CQRS.Users.Commands.Handlers
 
       public async Task<int> Handle(CreateUserCommand request, CancellationToken cancellationToken)
       {
-         var existingUser = await _userRepository.GetUserByEmailAsync(request.User.Email, cancellationToken);
-         if (existingUser != null)
+         bool isExists = await _userRepository.EmailExistsAsync(request.User.Email, cancellationToken);
+         if (isExists)
          {
             throw new DomainException("User with this email already exists.");
          }
@@ -33,7 +33,7 @@ namespace AuthLocationApp.Application.CQRS.Users.Commands.Handlers
          await _userRepository.AddAsync(user, cancellationToken);
          await _userRepository.SaveChangesAsync(cancellationToken);
 
-         existingUser = await _userRepository.GetUserByEmailAsync(request.User.Email, cancellationToken);
+         var existingUser = await _userRepository.GetUserByEmailAsync(request.User.Email, cancellationToken);
 
          return existingUser != null ? existingUser.Id : 0;
       }
